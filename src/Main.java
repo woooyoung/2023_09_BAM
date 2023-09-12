@@ -9,10 +9,11 @@ public class Main {
 
 		Scanner sc = new Scanner(System.in);
 		int lastArticleId = 0;
+
 		List<Article> articles = new ArrayList<Article>();
-		
+
 		while (true) {
-			
+
 			System.out.printf("명령어 ) ");
 			String command = sc.nextLine();
 
@@ -28,9 +29,12 @@ public class Main {
 			if (command.equals("article list")) {
 				if (articles.size() == 0) {
 					System.out.println("게시글이 없습니다");
-				}
-				else {
-					System.out.println("게시글 있던데???");
+				} else {
+					System.out.println("번호   /    제목   ");
+					for (int i = articles.size() - 1; i >= 0; i--) {
+						Article article = articles.get(i);
+						System.out.printf(" %d     /   %s  \n", article.id, article.title);
+					}
 				}
 
 			} else if (command.equals("article write")) {
@@ -61,8 +65,8 @@ class Article {
 	int id;
 	String title;
 	String body;
-	
-	Article(int id, String title, String body){
+
+	Article(int id, String title, String body) {
 		this.id = id;
 		this.title = title;
 		this.body = body;
