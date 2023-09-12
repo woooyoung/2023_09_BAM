@@ -7,12 +7,17 @@ public class Main {
 
 		Scanner sc = new Scanner(System.in);
 
-//		String cmd = sc.nextLine();
-//		int cmd = sc.nextInt();
-		String cmd = sc.next();
+		while (true) {
+			System.out.printf("명령어 )");
+			String command = sc.nextLine();
+			
+			if(command.equals("exit")) {
+				break;
+			}
+		}
 
-		System.out.println("[ " + cmd + " ]");
-
-		System.out.println("== 프로그램 끝 =="); 
+		System.out.println("== 프로그램 끝 ==");
+		
+		sc.close();
 	}
 }
