@@ -13,6 +13,6 @@ public class Main {
 
 		System.out.println("[ " + cmd + " ]");
 
-		System.out.println("== 프로그램 끝 ==");
+		System.out.println("== 프로그램 끝 =="); 
 	}
 }
