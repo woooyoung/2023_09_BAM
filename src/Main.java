@@ -15,7 +15,7 @@ public class Main {
 		while (true) {
 
 			System.out.printf("명령어 ) ");
-			String command = sc.nextLine();
+			String command = sc.nextLine().trim();
 
 			if (command.length() == 0) {
 				System.out.println("너 명령어 입력 안했어");
@@ -49,6 +49,16 @@ public class Main {
 
 				System.out.printf("%d번글이 생성되었습니다.\n", id);
 				lastArticleId++;
+			} else if (command.startsWith("article detail")) {
+
+				String[] commandDiv = command.split(" "); // article detail 1
+//				System.out.println(commandDiv[0]);
+//				System.out.println(commandDiv[1]);
+//				System.out.println(commandDiv[2]);
+
+				int id = Integer.parseInt(commandDiv[2]);
+
+				System.out.printf("%d번 게시물은 없어\n", id);
 			} else {
 				System.out.println("존재하지 않는 명령어입니다");
 				continue;
