@@ -80,24 +80,22 @@ public class Main {
 
 				int id = Integer.parseInt(commandDiv[2]);
 
-				boolean found = false;
-				Article foundArticle = null;
+				int foundIndex = -1;
 
 				for (int i = 0; i < articles.size(); i++) {
 					Article article = articles.get(i);
 					if (article.id == id) {
-						found = true;
-						foundArticle = article;
+						foundIndex = i;
 						break;
 					}
 				}
 
-				if (foundArticle == null) {
+				if (foundIndex == -1) {
 					System.out.printf("%d번 게시물은 없어\n", id);
 					continue;
 				}
-				
-				articles.remove(id);
+
+				articles.remove(foundIndex);
 				System.out.println(id + "번 글을 삭제했어");
 
 			} else {
