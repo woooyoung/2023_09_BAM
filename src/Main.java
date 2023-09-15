@@ -3,16 +3,16 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
+	static List<Article> articles = new ArrayList<Article>();
+
 	public static void main(String[] args) {
 
 		System.out.println("== 프로그램 시작 ==");
-		
+
 		makeTestData();
 
 		Scanner sc = new Scanner(System.in);
-		int lastArticleId = 0;
-
-		List<Article> articles = new ArrayList<Article>();
+		int lastArticleId = 3;
 
 		while (true) {
 
@@ -32,7 +32,7 @@ public class Main {
 				if (articles.size() == 0) {
 					System.out.println("게시글이 없습니다");
 				} else {
-					System.out.println("번호     /    제목     /    조회   ");
+					System.out.println("번호      /    제목     /    조회   ");
 					for (int i = articles.size() - 1; i >= 0; i--) {
 						Article article = articles.get(i);
 						System.out.printf(" %4d     /   %5s    /      %4d  \n", article.id, article.title, article.hit);
@@ -72,7 +72,7 @@ public class Main {
 					System.out.printf("%d번 게시물은 없어\n", id);
 					continue;
 				}
-				
+
 				foundArticle.hit++;
 
 				System.out.println("번호 : " + foundArticle.id);
@@ -147,6 +147,13 @@ public class Main {
 
 		sc.close();
 	}
+
+	private static void makeTestData() {
+		System.out.println("테스트를 위한 데이터 3개 생성 완료");
+		articles.add(new Article(1, Util.getNow(), Util.getNow(), "제목1", "내용1", 11));
+		articles.add(new Article(2, Util.getNow(), Util.getNow(), "제목2", "내용2", 22));
+		articles.add(new Article(3, Util.getNow(), Util.getNow(), "제목3", "내용3", 33));
+	}
 }
 
 class Article {
@@ -158,11 +165,15 @@ class Article {
 	int hit;
 
 	Article(int id, String regDate, String updateDate, String title, String body) {
+		this(id, regDate, updateDate, title, body, 0);
+	}
+
+	Article(int id, String regDate, String updateDate, String title, String body, int hit) {
 		this.id = id;
 		this.regDate = regDate;
 		this.updateDate = updateDate;
 		this.title = title;
 		this.body = body;
-		this.hit = 0;
+		this.hit = hit;
 	}
 }
