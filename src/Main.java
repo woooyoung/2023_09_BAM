@@ -12,7 +12,7 @@ public class Main {
 		makeTestData();
 
 		Scanner sc = new Scanner(System.in);
-		int lastArticleId = 3;
+		int lastArticleId = 5;
 
 		while (true) {
 
@@ -28,15 +28,39 @@ public class Main {
 				break;
 			}
 
-			if (command.equals("article list")) {
+			if (command.startsWith("article list")) {
 				if (articles.size() == 0) {
 					System.out.println("게시글이 없습니다");
-				} else {
-					System.out.println("번호      /    제목     /    조회   ");
-					for (int i = articles.size() - 1; i >= 0; i--) {
-						Article article = articles.get(i);
-						System.out.printf(" %4d     /   %5s    /      %4d  \n", article.id, article.title, article.hit);
+					continue;
+				}
+
+				String searchKeyword = command.substring("article list".length()).trim();
+
+				System.out.println("searchKeyword : " + searchKeyword);
+
+				List<Article> forPrintArticles = articles;
+
+				if (searchKeyword.length() > 0) {
+					forPrintArticles = new ArrayList<Article>();
+
+					for (Article article : articles) {
+						if (article.title.contains(searchKeyword)) {
+							forPrintArticles.add(article);
+						}
 					}
+					if (forPrintArticles.size() == 0) {
+						System.out.println("검색 결과 없어");
+						continue;
+					}
+				} else {
+					System.out.println("검색어가 없어");
+
+				}
+
+				System.out.println("번호      /    제목     /    조회   ");
+				for (int i = forPrintArticles.size() - 1; i >= 0; i--) {
+					Article article = forPrintArticles.get(i);
+					System.out.printf(" %4d     /   %5s    /      %4d  \n", article.id, article.title, article.hit);
 				}
 
 			} else if (command.equals("article write")) {
@@ -54,7 +78,7 @@ public class Main {
 				lastArticleId++;
 			} else if (command.startsWith("article detail")) {
 
-				String[] commandDiv = command.split(" "); // article detail 1
+				String[] commandDiv = command.split(" ");
 
 				int id = Integer.parseInt(commandDiv[2]);
 
@@ -99,7 +123,7 @@ public class Main {
 
 			} else if (command.startsWith("article delete")) {
 
-				String[] commandDiv = command.split(" "); // article delete 1
+				String[] commandDiv = command.split(" ");
 
 				int id = Integer.parseInt(commandDiv[2]);
 
@@ -138,33 +162,22 @@ public class Main {
 
 	private static Article getArticleById(int id) {
 
-//		for (int i = 0; i < articles.size(); i++) {
-//			Article article = articles.get(i);
-//			if (article.id == id) {
-//				return article;
-//			}
-//		}
-
-//		for (Article article : articles) {
-//			if (article.id == id) {
-//				return article;
-//			}
-//		}
-		
 		int index = getArticleIndexById(id);
-		
+
 		if (index != -1) {
 			return articles.get(index);
 		}
-		
+
 		return null;
 	}
 
 	private static void makeTestData() {
-		System.out.println("테스트를 위한 데이터 3개 생성 완료");
+		System.out.println("테스트를 위한 데이터 5개 생성 완료");
 		articles.add(new Article(1, Util.getNow(), Util.getNow(), "제목1", "내용1", 11));
 		articles.add(new Article(2, Util.getNow(), Util.getNow(), "제목2", "내용2", 22));
 		articles.add(new Article(3, Util.getNow(), Util.getNow(), "제목3", "내용3", 33));
+		articles.add(new Article(4, Util.getNow(), Util.getNow(), "제목11", "내용11", 44));
+		articles.add(new Article(5, Util.getNow(), Util.getNow(), "제목21", "내용21", 55));
 	}
 }
 
