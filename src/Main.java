@@ -124,7 +124,6 @@ public class Main {
 		sc.close();
 	}
 
-	// TODO : 어떻게 통합하지???
 	private static int getArticleIndexById(int id) {
 
 		for (int i = 0; i < articles.size(); i++) {
@@ -133,19 +132,31 @@ public class Main {
 				return i;
 			}
 		}
-		
+
 		return -1;
 	}
 
 	private static Article getArticleById(int id) {
 
-		for (int i = 0; i < articles.size(); i++) {
-			Article article = articles.get(i);
-			if (article.id == id) {
-				return article;
-			}
-		}
+//		for (int i = 0; i < articles.size(); i++) {
+//			Article article = articles.get(i);
+//			if (article.id == id) {
+//				return article;
+//			}
+//		}
 
+//		for (Article article : articles) {
+//			if (article.id == id) {
+//				return article;
+//			}
+//		}
+		
+		int index = getArticleIndexById(id);
+		
+		if (index != -1) {
+			return articles.get(index);
+		}
+		
 		return null;
 	}
 
