@@ -31,13 +31,30 @@ public class Main {
 				break;
 			}
 
-			else if (command.equals("member join")) {
+			if (command.equals("member join")) {
 				int id = lastMemberId + 1;
 				String regDate = Util.getNow();
-				System.out.printf("로그인 아이디 : ");
-				String loginId = sc.nextLine();
+				String loginId = null;
+
+				while (true) {
+					System.out.printf("로그인 아이디 : ");
+					loginId = sc.nextLine();
+
+					if (loginId.length() == 0) {
+						System.out.println("아이디 입력해라");
+						continue;
+					} else if (isJoinableLoginId(loginId) == false) {
+						System.out.println("이미 쓰는 아이디야");
+						continue;
+					}
+
+					break;
+				}
+
 				System.out.printf("로그인 비밀번호 : ");
 				String loginPw = sc.nextLine();
+				System.out.printf("로그인 비밀번호 확인 : ");
+				String loginPwConfirm = sc.nextLine();
 				System.out.printf("이름 : ");
 				String name = sc.nextLine();
 
@@ -166,6 +183,27 @@ public class Main {
 		System.out.println("== 프로그램 종료 ==");
 
 		sc.close();
+	}
+
+	private static boolean isJoinableLoginId(String loginId) {
+		int index = getMemberIndexByLoginId(loginId);
+
+		if (index == -1) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private static int getMemberIndexByLoginId(String loginId) {
+		int i = 0;
+		for (Member member : members) {
+//			if (member.loginId == loginId) {     -> x
+			if (member.loginId.equals(loginId)) {
+				return i;
+			}
+		}
+		return -1;
 	}
 
 	private static int getArticleIndexById(int id) {
