@@ -1,13 +1,24 @@
+package com.KoreaIT.java.BAM;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Main {
-	static List<Article> articles = new ArrayList<Article>();
-	static List<Member> members = new ArrayList<Member>();
+import com.KoreaIT.java.BAM.dto.Article;
+import com.KoreaIT.java.BAM.dto.Member;
+import com.KoreaIT.java.BAM.util.Util;
 
-	public static void main(String[] args) {
+public class App {
 
+	List<Article> articles;
+	List<Member> members;
+
+	App() {
+		articles = new ArrayList<Article>();
+		members = new ArrayList<Member>();
+	}
+
+	public void start() {
 		System.out.println("== 프로그램 시작 ==");
 
 		makeTestData();
@@ -215,9 +226,10 @@ public class Main {
 		System.out.println("== 프로그램 종료 ==");
 
 		sc.close();
+
 	}
 
-	private static boolean isJoinableLoginId(String loginId) {
+	private boolean isJoinableLoginId(String loginId) {
 		int index = getMemberIndexByLoginId(loginId);
 
 		if (index == -1) {
@@ -227,10 +239,9 @@ public class Main {
 		return false;
 	}
 
-	private static int getMemberIndexByLoginId(String loginId) {
+	private int getMemberIndexByLoginId(String loginId) {
 		int i = 0;
 		for (Member member : members) {
-//			if (member.loginId == loginId) {     -> x
 			if (member.loginId.equals(loginId)) {
 				return i;
 			}
@@ -238,7 +249,7 @@ public class Main {
 		return -1;
 	}
 
-	private static int getArticleIndexById(int id) {
+	private int getArticleIndexById(int id) {
 
 		for (int i = 0; i < articles.size(); i++) {
 			Article article = articles.get(i);
@@ -250,7 +261,7 @@ public class Main {
 		return -1;
 	}
 
-	private static Article getArticleById(int id) {
+	private Article getArticleById(int id) {
 
 		int index = getArticleIndexById(id);
 
@@ -261,7 +272,7 @@ public class Main {
 		return null;
 	}
 
-	private static void makeTestData() {
+	private void makeTestData() {
 		System.out.println("테스트를 위한 데이터 5개 생성 완료");
 		articles.add(new Article(1, Util.getNow(), Util.getNow(), "제목1", "내용1", 11));
 		articles.add(new Article(2, Util.getNow(), Util.getNow(), "제목2", "내용2", 22));
@@ -269,44 +280,5 @@ public class Main {
 		articles.add(new Article(4, Util.getNow(), Util.getNow(), "제목11", "내용11", 44));
 		articles.add(new Article(5, Util.getNow(), Util.getNow(), "제목21", "내용21", 55));
 	}
-}
 
-class Article {
-	int id;
-	String regDate;
-	String updateDate;
-	String title;
-	String body;
-	int hit;
-
-	Article(int id, String regDate, String updateDate, String title, String body) {
-		this(id, regDate, updateDate, title, body, 0);
-	}
-
-	Article(int id, String regDate, String updateDate, String title, String body, int hit) {
-		this.id = id;
-		this.regDate = regDate;
-		this.updateDate = updateDate;
-		this.title = title;
-		this.body = body;
-		this.hit = hit;
-	}
-}
-
-class Member {
-	int id;
-	String regDate;
-	String updateDate;
-	String loginId;
-	String loginPw;
-	String name;
-
-	Member(int id, String regDate, String updateDate, String loginId, String loginPw, String name) {
-		this.id = id;
-		this.regDate = regDate;
-		this.updateDate = updateDate;
-		this.loginId = loginId;
-		this.loginPw = loginPw;
-		this.name = name;
-	}
 }
