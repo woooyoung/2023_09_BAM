@@ -1,23 +1,15 @@
 package com.KoreaIT.java.BAM;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 import com.KoreaIT.java.BAM.controller.ArticleController;
 import com.KoreaIT.java.BAM.controller.Controller;
 import com.KoreaIT.java.BAM.controller.MemberController;
-import com.KoreaIT.java.BAM.dto.Article;
-import com.KoreaIT.java.BAM.dto.Member;
 
 public class App {
 
-	List<Article> articles;
-	List<Member> members;
-
 	App() {
-		articles = new ArrayList<Article>();
-		members = new ArrayList<Member>();
+
 	}
 
 	public void start() {
@@ -25,8 +17,8 @@ public class App {
 
 		Scanner sc = new Scanner(System.in);
 
-		MemberController memberController = new MemberController(members, sc);
-		ArticleController articleController = new ArticleController(articles, sc);
+		MemberController memberController = new MemberController(sc);
+		ArticleController articleController = new ArticleController(sc);
 
 		articleController.makeTestData();
 
@@ -46,17 +38,15 @@ public class App {
 				break;
 			}
 
-			String[] commandDiv = command.split(" "); // article list // member join // article list 제
-			// article write // adfg
+			String[] commandDiv = command.split(" ");
 
 			String controllerName = commandDiv[0];
 			if (commandDiv.length == 1) {
 				System.out.println("명령어 확인해");
 				continue;
 			}
-			
-			String actionMethodName = commandDiv[1];
 
+			String actionMethodName = commandDiv[1];
 
 			controller = null;
 
