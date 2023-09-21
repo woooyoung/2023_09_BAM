@@ -85,6 +85,10 @@ public class ArticleController extends Controller {
 	}
 
 	public void doWrite() {
+//		if (isLogined() == false) {   ########################
+//			System.out.println("현재 로그아웃 상태야");
+//			return;
+//		}
 		int id = lastArticleId + 1;
 		String regDate = Util.getNow();
 		System.out.printf("제목 : ");

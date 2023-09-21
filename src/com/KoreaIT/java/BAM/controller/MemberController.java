@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import com.KoreaIT.java.BAM.dto.Article;
 import com.KoreaIT.java.BAM.dto.Member;
 import com.KoreaIT.java.BAM.util.Util;
 
@@ -36,19 +35,42 @@ public class MemberController extends Controller {
 		case "login":
 			doLogin();
 			break;
+		case "logout":
+			doLogout();
+			break;
+		case "whoami":
+			showWhoAmI();
+			break;
 		default:
 			System.out.println("그런 세부기능은 없어");
 			break;
 		}
 	}
 
-	private void doLogin() {
-//		if(isLogined == true) {
-//			System.out.println("이미 누가 로그인 했다");
-//			return;
-//		}
+	private void showWhoAmI() {
+		if (isLogined() == false) {
+			System.out.println("현재 로그아웃 상태야");
+			return;
+		}
+		System.out.println("== 현재 로그인 한 회원의 정보==");
+		System.out.println("가입일 : " + loginedMember.regDate);
+		System.out.println("로그인 아이디 : " + loginedMember.loginId);
+		System.out.println("이름 : " + loginedMember.name);
+	}
 
-		if (loginedMember != null) {
+	private void doLogout() {
+		if (isLogined() == false) {
+			System.out.println("현재 로그아웃 상태야");
+			return;
+		}
+		isLogined = false;
+		loginedMember = null;
+
+		System.out.println("로그아웃 함");
+	}
+
+	private void doLogin() {
+		if (isLogined()) {
 			System.out.println("이미 누가 로그인 했다");
 			return;
 		}
@@ -75,6 +97,10 @@ public class MemberController extends Controller {
 	}
 
 	public void doJoin() {
+		if (isLogined()) {
+			System.out.println("이미 누가 로그인 했다");
+			return;
+		}
 		int id = lastMemberId + 1;
 		String regDate = Util.getNow();
 		String loginId = null;
@@ -139,6 +165,10 @@ public class MemberController extends Controller {
 		System.out.printf("%d번 회원이 가입되었습니다.\n", id);
 		lastMemberId++;
 
+	}
+
+	public boolean isLogined() {
+		return loginedMember != null;
 	}
 
 	private Member getMemberByLoginId(String loginId) {
