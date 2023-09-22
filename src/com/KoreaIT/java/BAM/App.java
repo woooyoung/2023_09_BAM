@@ -60,6 +60,29 @@ public class App {
 				continue;
 			}
 
+			switch (controllerName + " " + actionMethodName) {
+			case "article write":
+			case "article modify":
+			case "article delete":
+			case "member logout":
+			case "member whoami":
+				if (Controller.isLogined() == false) {
+					System.out.println("현재 로그아웃 상태야. 로그인 후 이용해");
+					continue;
+				}
+				break;
+			}
+			
+			switch (controllerName + " " + actionMethodName) {
+			case "member login":
+			case "member join":
+				if (Controller.isLogined()) {
+					System.out.println("이미 누가 로그인 했다. 로그아웃 후 이용해");
+					continue;
+				}
+				break;
+			}
+
 			controller.doAction(actionMethodName, command);
 
 		}
