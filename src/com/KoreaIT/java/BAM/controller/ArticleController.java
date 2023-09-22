@@ -40,9 +40,17 @@ public class ArticleController extends Controller {
 			showDetail();
 			break;
 		case "modify":
+			if (isLogined() == false) {
+				System.out.println("현재 로그아웃 상태야");
+				return;
+			}
 			doModify();
 			break;
 		case "delete":
+			if (isLogined() == false) {
+				System.out.println("현재 로그아웃 상태야");
+				return;
+			}
 			doDelete();
 			break;
 		default:
@@ -80,10 +88,11 @@ public class ArticleController extends Controller {
 
 		}
 
-		System.out.println("번호      /    제목     /    조회   ");
+		System.out.println("번호      /    제목      /    작성자       /    조회   ");
 		for (int i = forPrintArticles.size() - 1; i >= 0; i--) {
 			Article article = forPrintArticles.get(i);
-			System.out.printf(" %4d     /   %5s    /      %4d  \n", article.id, article.title, article.hit);
+			System.out.printf(" %4d     /   %5s    /      %4d      /      %4d  \n", article.id, article.title,
+					article.memberId, article.hit);
 		}
 
 	}
@@ -97,7 +106,7 @@ public class ArticleController extends Controller {
 		System.out.printf("내용 : ");
 		String body = sc.nextLine();
 
-		Article article = new Article(id, regDate, regDate, title, body);
+		Article article = new Article(id, regDate, regDate, loginedMember.id, title, body);
 		articles.add(article);
 
 		System.out.printf("%d번글이 생성되었습니다.\n", id);
@@ -122,6 +131,7 @@ public class ArticleController extends Controller {
 		System.out.println("번호 : " + foundArticle.id);
 		System.out.println("작성날짜 : " + foundArticle.regDate);
 		System.out.println("수정날짜 : " + foundArticle.updateDate);
+		System.out.println("작성자 : " + foundArticle.memberId);
 		System.out.println("제목 : " + foundArticle.title);
 		System.out.println("내용 : " + foundArticle.body);
 		System.out.println("조회수 : " + foundArticle.hit);
@@ -194,11 +204,11 @@ public class ArticleController extends Controller {
 
 	public void makeTestData() {
 		System.out.println("테스트를 위한 게시글 데이터 5개 생성 완료");
-		articles.add(new Article(1, Util.getNow(), Util.getNow(), "제목1", "내용1", 11));
-		articles.add(new Article(2, Util.getNow(), Util.getNow(), "제목2", "내용2", 22));
-		articles.add(new Article(3, Util.getNow(), Util.getNow(), "제목3", "내용3", 33));
-		articles.add(new Article(4, Util.getNow(), Util.getNow(), "제목11", "내용11", 44));
-		articles.add(new Article(5, Util.getNow(), Util.getNow(), "제목21", "내용21", 55));
+		articles.add(new Article(1, Util.getNow(), Util.getNow(), 1, "제목1", "내용1", 11));
+		articles.add(new Article(2, Util.getNow(), Util.getNow(), 2, "제목2", "내용2", 22));
+		articles.add(new Article(3, Util.getNow(), Util.getNow(), 3, "제목3", "내용3", 33));
+		articles.add(new Article(4, Util.getNow(), Util.getNow(), 1, "제목11", "내용11", 44));
+		articles.add(new Article(5, Util.getNow(), Util.getNow(), 3, "제목21", "내용21", 55));
 	}
 
 }
