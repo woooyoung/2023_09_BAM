@@ -15,7 +15,6 @@ public class MemberController extends Controller {
 	private String command;
 
 	boolean isLogined = false;
-	Member loginedMember = null;
 
 	int lastMemberId = 3;
 
@@ -165,10 +164,6 @@ public class MemberController extends Controller {
 		System.out.printf("%d번 회원이 가입되었습니다.\n", id);
 		lastMemberId++;
 
-	}
-
-	public boolean isLogined() {
-		return loginedMember != null;
 	}
 
 	private Member getMemberByLoginId(String loginId) {
