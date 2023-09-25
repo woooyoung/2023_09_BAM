@@ -16,8 +16,6 @@ public class ArticleController extends Controller {
 	private String actionMethodName;
 	private String command;
 
-	int lastArticleId = 5;
-
 	public ArticleController(Scanner sc) {
 		this.articles = Container.articleDao.articles;
 		this.sc = sc;
@@ -101,7 +99,7 @@ public class ArticleController extends Controller {
 
 	public void doWrite() {
 
-		int id = lastArticleId + 1;
+		int id = Container.articleDao.setNewId();
 		String regDate = Util.getNow();
 		System.out.printf("제목 : ");
 		String title = sc.nextLine();
@@ -109,10 +107,9 @@ public class ArticleController extends Controller {
 		String body = sc.nextLine();
 
 		Article article = new Article(id, regDate, regDate, loginedMember.id, title, body);
-		articles.add(article);
+		Container.articleDao.add(article);
 
 		System.out.printf("%d번글이 생성되었습니다.\n", id);
-		lastArticleId++;
 
 	}
 
@@ -226,11 +223,11 @@ public class ArticleController extends Controller {
 
 	public void makeTestData() {
 		System.out.println("테스트를 위한 게시글 데이터 5개 생성 완료");
-		articles.add(new Article(1, Util.getNow(), Util.getNow(), 1, "제목1", "내용1", 11));
-		articles.add(new Article(2, Util.getNow(), Util.getNow(), 2, "제목2", "내용2", 22));
-		articles.add(new Article(3, Util.getNow(), Util.getNow(), 3, "제목3", "내용3", 33));
-		articles.add(new Article(4, Util.getNow(), Util.getNow(), 1, "제목11", "내용11", 44));
-		articles.add(new Article(5, Util.getNow(), Util.getNow(), 3, "제목21", "내용21", 55));
+		Container.articleDao.add(new Article(1, Util.getNow(), Util.getNow(), 1, "제목1", "내용1", 11));
+		Container.articleDao.add(new Article(2, Util.getNow(), Util.getNow(), 2, "제목2", "내용2", 22));
+		Container.articleDao.add(new Article(3, Util.getNow(), Util.getNow(), 3, "제목3", "내용3", 33));
+		Container.articleDao.add(new Article(4, Util.getNow(), Util.getNow(), 1, "제목11", "내용11", 44));
+		Container.articleDao.add(new Article(5, Util.getNow(), Util.getNow(), 3, "제목21", "내용21", 55));
 	}
 
 }
