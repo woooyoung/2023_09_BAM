@@ -8,10 +8,6 @@ import com.KoreaIT.java.BAM.controller.MemberController;
 
 public class App {
 
-	App() {
-
-	}
-
 	public void start() {
 		System.out.println("== 프로그램 시작 ==");
 
@@ -72,7 +68,7 @@ public class App {
 				}
 				break;
 			}
-			
+
 			switch (controllerName + " " + actionMethodName) {
 			case "member login":
 			case "member join":
