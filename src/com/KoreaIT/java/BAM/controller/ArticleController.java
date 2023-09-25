@@ -78,13 +78,21 @@ public class ArticleController extends Controller {
 
 		}
 
-		String writerName = null;
-		
 		List<Member> members = Container.memberDao.members;
 
 		System.out.println("번호      /    제목      /    작성자       /    조회   ");
 		for (int i = forPrintArticles.size() - 1; i >= 0; i--) {
+
 			Article article = forPrintArticles.get(i);
+			String writerName = null;
+
+			for (Member member : members) {
+				if (article.memberId == member.id) {
+					writerName = member.name;
+					break;
+				}
+			}
+
 			System.out.printf(" %4d     /   %5s    /      %4s      /      %4d  \n", article.id, article.title,
 					writerName, article.hit);
 		}
@@ -120,12 +128,23 @@ public class ArticleController extends Controller {
 			return;
 		}
 
+		List<Member> members = Container.memberDao.members;
+
+		String writerName = null;
+
+		for (Member member : members) {
+			if (foundArticle.memberId == member.id) {
+				writerName = member.name;
+				break;
+			}
+		}
+
 		foundArticle.hit++;
 
 		System.out.println("번호 : " + foundArticle.id);
 		System.out.println("작성날짜 : " + foundArticle.regDate);
 		System.out.println("수정날짜 : " + foundArticle.updateDate);
-		System.out.println("작성자 : " + foundArticle.memberId);
+		System.out.println("작성자 : " + writerName);
 		System.out.println("제목 : " + foundArticle.title);
 		System.out.println("내용 : " + foundArticle.body);
 		System.out.println("조회수 : " + foundArticle.hit);
